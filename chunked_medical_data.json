@@ -1,0 +1,112 @@
+[
+  {
+    "content": "Patient ID: USR001\n        Patient Name: John Doe\n        Doctor: Dr. Smith\n        Hospital ID: HOSP001\n        Mobile: 1234567890\n        Address: 123 Main St, Cityville\n        Transcript: Patient complains of headaches and dizziness for the past 3 days.\n        Audio URL: https://bubvzeylnvznjlzcalgx.supabase.co/storage/v1/object/public/audio/consultation_001.mp3\n        Record Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "medical_record",
+      "user_id": "USR001",
+      "user_name": "John Doe",
+      "doctor": "Dr. Smith",
+      "hospital_id": "HOSP001",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "Patient ID: USR002\n        Patient Name: Jane Smith\n        Doctor: Dr. Johnson\n        Hospital ID: HOSP002\n        Mobile: 0987654321\n        Address: 456 Oak Ave, Townsville\n        Transcript: Routine checkup, patient reports feeling healthy.\n        Audio URL: https://bubvzeylnvznjlzcalgx.supabase.co/storage/v1/object/public/audio/consultation_002.mp3\n        Record Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "medical_record",
+      "user_id": "USR002",
+      "user_name": "Jane Smith",
+      "doctor": "Dr. Johnson",
+      "hospital_id": "HOSP002",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "Patient ID: USR003\n        Patient Name: Robert Johnson\n        Doctor: Dr. Williams\n        Hospital ID: HOSP001\n        Mobile: 5551234567\n        Address: 789 Pine Rd, Villagetown\n        Transcript: Patient has been experiencing chest pain after exercise.\n        Audio URL: https://bubvzeylnvznjlzcalgx.supabase.co/storage/v1/object/public/audio/consultation_003.mp3\n        Record Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "medical_record",
+      "user_id": "USR003",
+      "user_name": "Robert Johnson",
+      "doctor": "Dr. Williams",
+      "hospital_id": "HOSP001",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "Patient ID: USR004\n        Patient Name: Emily Davis\n        Doctor: Dr. Brown\n        Hospital ID: HOSP003\n        Mobile: 4445556666\n        Address: 321 Elm Blvd, Hamlet\n        Transcript: Follow-up visit for diabetes management.\n        Audio URL: https://bubvzeylnvznjlzcalgx.supabase.co/storage/v1/object/public/audio/consultation_004.mp3\n        Record Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "medical_record",
+      "user_id": "USR004",
+      "user_name": "Emily Davis",
+      "doctor": "Dr. Brown",
+      "hospital_id": "HOSP003",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "Patient ID: USR005\n        Patient Name: Michael Wilson\n        Doctor: Dr. Miller\n        Hospital ID: HOSP002\n        Mobile: 7778889999\n        Address: 654 Maple Dr, Borough\n        Transcript: Patient reports difficulty sleeping and anxiety.\n        Audio URL: https://bubvzeylnvznjlzcalgx.supabase.co/storage/v1/object/public/audio/consultation_005.mp3\n        Record Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "medical_record",
+      "user_id": "USR005",
+      "user_name": "Michael Wilson",
+      "doctor": "Dr. Miller",
+      "hospital_id": "HOSP002",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "SOAP Note ID: 1\n        Patient ID: USR001\n        Subjective: Patient reports headaches occurring 2-3 times daily, lasting 30-45 minutes. No visual disturbances. Associated with mild dizziness.\n        Objective: Blood pressure: 130/85. Heart rate: 72 bpm. Neurological exam: grossly normal.\n        Assessment: Tension-type headaches, possibly stress-related. Rule out other causes.\n        Plan: Prescribe relaxation techniques. Schedule follow-up in 2 weeks. Consider physical therapy.\n        Note Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "soap_note",
+      "note_id": 1,
+      "user_id": "USR001",
+      "user_name": "John Doe",
+      "doctor": "Dr. Smith",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "SOAP Note ID: 2\n        Patient ID: USR002\n        Subjective: Patient feels generally well. No specific complaints at this time.\n        Objective: Blood pressure: 118/76. Heart rate: 68 bpm. Weight: 150 lbs. All vitals within normal limits.\n        Assessment: Overall good health. Normal routine checkup.\n        Plan: Continue current healthy habits. Schedule annual checkup next year.\n        Note Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "soap_note",
+      "note_id": 2,
+      "user_id": "USR002",
+      "user_name": "Jane Smith",
+      "doctor": "Dr. Johnson",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "SOAP Note ID: 3\n        Patient ID: USR003\n        Subjective: Chest pain described as pressure-like, occurring during or after physical activity. Lasts 5-10 minutes. No radiation. Associated with shortness of breath.\n        Objective: Blood pressure: 142/90. Heart rate: 78 bpm. EKG shows nonspecific ST changes.\n        Assessment: Suspect stable angina. Possible hypertension.\n        Plan: Order stress test. Start patient on low-dose aspirin. Refer to cardiologist.\n        Note Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "soap_note",
+      "note_id": 3,
+      "user_id": "USR003",
+      "user_name": "Robert Johnson",
+      "doctor": "Dr. Williams",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "SOAP Note ID: 4\n        Patient ID: USR004\n        Subjective: Patient reports blood glucose levels have been well-controlled. No episodes of hypoglycemia. Minor concerns about diet adherence.\n        Objective: Blood glucose: 110 mg/dL (fasting). HbA1c: 6.2%. Weight: 175 lbs.\n        Assessment: Good diabetes control. Patient is managing condition well.\n        Plan: Continue current medication regimen. Provide dietary counseling. Schedule 3-month follow-up.\n        Note Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "soap_note",
+      "note_id": 4,
+      "user_id": "USR004",
+      "user_name": "Emily Davis",
+      "doctor": "Dr. Brown",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  },
+  {
+    "content": "SOAP Note ID: 5\n        Patient ID: USR005\n        Subjective: Patient describes racing thoughts at night, difficulty falling asleep. Reports feeling on edge and irritable during the day.\n        Objective: Appears anxious during visit. Pulse: 88 bpm. Blood pressure: 125/80.\n        Assessment: Generalized anxiety disorder with associated insomnia.\n        Plan: Refer to mental health counselor. Consider short-term anxiolytic. Provide sleep hygiene education.\n        Note Date: 2025-11-11T13:21:45.217197",
+    "metadata": {
+      "source": "soap_note",
+      "note_id": 5,
+      "user_id": "USR005",
+      "user_name": "Michael Wilson",
+      "doctor": "Dr. Miller",
+      "created_at": "2025-11-11T13:21:45.217197"
+    }
+  }
+]
