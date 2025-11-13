@@ -1,0 +1,29 @@
+[
+  {
+    "content": "Hospital Information:\n        ID: HOSP004\n        Name: Metropolitan Medical Center\n        Address: 789 Healthcare Drive, MetroCity\n        Phone: +1-555-0199\n        Created: 2025-11-13 19:13:04.588000",
+    "metadata": {
+      "source": "hospital",
+      "hospital_id": "HOSP004",
+      "created_at": "2025-11-13 19:13:04.588000"
+    }
+  },
+  {
+    "content": "Doctor Information:\n        ID: DOC006\n        Name: Dr. James Wilson\n        Hospital ID: HOSP004\n        Phone: +1-555-0198\n        Certificate URL: https://example.com/certificates/jwilson.pdf\n        ID Document URL: https://example.com/ids/jwilson.pdf\n        Profile Image URL: https://example.com/profiles/jwilson.jpg\n        Created: 2025-11-13 19:13:04.588000",
+    "metadata": {
+      "source": "doctor",
+      "doctor_id": "DOC006",
+      "hospital_id": "HOSP004",
+      "created_at": "2025-11-13 19:13:04.588000"
+    }
+  },
+  {
+    "content": "Patient Information:\n        ID: USR006\n        Name: Olivia Brown\n        Mobile: +1-555-0197\n        Address: 321 Wellness Street, HealthVille\n        Treated By: DOC006\n        Hospital ID: HOSP004\n        Transcript: Patient reports seasonal allergies and mild asthma\n        Audio URL: https://example.com/audio/olivia_brown_20231016.wav\n        Created: 2025-11-13 19:13:04.588000",
+    "metadata": {
+      "source": "user",
+      "user_id": "USR006",
+      "treated_by": "DOC006",
+      "hospital_id": "HOSP004",
+      "created_at": "2025-11-13 19:13:04.588000"
+    }
+  }
+]

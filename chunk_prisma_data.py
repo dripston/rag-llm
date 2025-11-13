@@ -1,10 +1,14 @@
 import os
 import asyncio
 import asyncpg
+import logging
 from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 import json
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -17,53 +21,53 @@ async def fetch_prisma_data():
     try:
         # Check if DATABASE_URL is available
         if not DATABASE_URL:
-            print("Error: DATABASE_URL not found in environment variables")
+            logger.error("DATABASE_URL not found in environment variables")
             return {}, []
             
         # Connect to the database
-        print("Connecting to Prisma database...")
+        logger.info("Connecting to Prisma database...")
         conn = await asyncpg.connect(DATABASE_URL)
         
-        print("Database connection successful!")
+        logger.info("Database connection successful!")
         
         # Fetch data from all tables
         data = {}
         
         # Fetch Hospitals
-        print("Fetching Hospital data...")
+        logger.info("Fetching Hospital data...")
         hospitals = await conn.fetch('SELECT * FROM "Hospital"')
         data['hospitals'] = [dict(record) for record in hospitals]
-        print(f"  Found {len(hospitals)} hospitals")
+        logger.info(f"  Found {len(hospitals)} hospitals")
         
         # Fetch Doctors
-        print("Fetching Doctor data...")
+        logger.info("Fetching Doctor data...")
         doctors = await conn.fetch('SELECT * FROM "Doctor"')
         data['doctors'] = [dict(record) for record in doctors]
-        print(f"  Found {len(doctors)} doctors")
+        logger.info(f"  Found {len(doctors)} doctors")
         
         # Fetch Users (Patients)
-        print("Fetching User (Patient) data...")
+        logger.info("Fetching User (Patient) data...")
         users = await conn.fetch('SELECT * FROM "User"')
         data['users'] = [dict(record) for record in users]
-        print(f"  Found {len(users)} users")
+        logger.info(f"  Found {len(users)} users")
         
         # Fetch Interactions
-        print("Fetching Interaction data...")
+        logger.info("Fetching Interaction data...")
         interactions = await conn.fetch('SELECT * FROM "Interaction"')
         data['interactions'] = [dict(record) for record in interactions]
-        print(f"  Found {len(interactions)} interactions")
+        logger.info(f"  Found {len(interactions)} interactions")
         
         # Fetch Reports
-        print("Fetching Report data...")
+        logger.info("Fetching Report data...")
         reports = await conn.fetch('SELECT * FROM "Report"')
         data['reports'] = [dict(record) for record in reports]
-        print(f"  Found {len(reports)} reports")
+        logger.info(f"  Found {len(reports)} reports")
         
         # Fetch SOAP Notes
-        print("Fetching SOAP Note data...")
+        logger.info("Fetching SOAP Note data...")
         soap_notes = await conn.fetch('SELECT * FROM "SoapNote"')
         data['soap_notes'] = [dict(record) for record in soap_notes]
-        print(f"  Found {len(soap_notes)} SOAP notes")
+        logger.info(f"  Found {len(soap_notes)} SOAP notes")
         
         # Close connection
         await conn.close()
@@ -71,7 +75,7 @@ async def fetch_prisma_data():
         return data
         
     except Exception as error:
-        print(f"Error fetching data: {error}")
+        logger.error(f"Error fetching data: {error}")
         return {}
 
 def convert_to_documents(data):
@@ -80,7 +84,7 @@ def convert_to_documents(data):
     
     # Handle case where data might be empty or malformed
     if not data or not isinstance(data, dict):
-        print("Warning: No valid data provided for document conversion")
+        logger.warning("No valid data provided for document conversion")
         return documents
     
     # Convert Hospitals to documents
@@ -219,7 +223,7 @@ def convert_to_documents(data):
         doc = Document(page_content=content.strip(), metadata=metadata)
         documents.append(doc)
     
-    print(f"Converted {len(documents)} documents from provided data")
+    logger.info(f"Converted {len(documents)} documents from provided data")
     return documents
 
 def chunk_documents(documents):
@@ -239,32 +243,32 @@ def chunk_documents(documents):
 
 async def main():
     """Main function to fetch data, convert to documents, and chunk them"""
-    print("Fetching medical data from Prisma database...")
+    logger.info("Fetching medical data from Prisma database...")
     data = await fetch_prisma_data()
     
     if not data:
-        print("Failed to fetch data. Exiting.")
+        logger.error("Failed to fetch data. Exiting.")
         return []
     
-    print("Converting records to LangChain Documents...")
+    logger.info("Converting records to LangChain Documents...")
     documents = convert_to_documents(data)
     
-    print(f"Created {len(documents)} documents")
+    logger.info(f"Created {len(documents)} documents")
     
-    print("Chunking documents...")
+    logger.info("Chunking documents...")
     chunked_documents = chunk_documents(documents)
     
-    print(f"Created {len(chunked_documents)} chunks")
+    logger.info(f"Created {len(chunked_documents)} chunks")
     
     # Display information about the first few chunks
-    print("\nFirst 3 chunks:")
+    logger.info("\nFirst 3 chunks:")
     for i, chunk in enumerate(chunked_documents[:3]):
-        print(f"\nChunk {i+1}:")
-        print(f"Content length: {len(chunk.page_content)} characters")
-        print(f"Metadata: {chunk.metadata}")
-        print("Content preview:")
-        print(chunk.page_content[:300] + "..." if len(chunk.page_content) > 300 else chunk.page_content)
-        print("-" * 50)
+        logger.info(f"\nChunk {i+1}:")
+        logger.info(f"Content length: {len(chunk.page_content)} characters")
+        logger.info(f"Metadata: {chunk.metadata}")
+        logger.info("Content preview:")
+        logger.info(chunk.page_content[:300] + "..." if len(chunk.page_content) > 300 else chunk.page_content)
+        logger.info("-" * 50)
     
     # Save chunks to a file for inspection
     chunk_data = []
@@ -277,9 +281,11 @@ async def main():
     with open("chunked_prisma_data.json", "w", encoding="utf-8") as f:
         json.dump(chunk_data, f, indent=2, default=str)
     
-    print(f"\nAll chunks saved to 'chunked_prisma_data.json'")
+    logger.info(f"\nAll chunks saved to 'chunked_prisma_data.json'")
     
     return chunked_documents
 
 if __name__ == "__main__":
+    # Set up logging for standalone execution
+    logging.basicConfig(level=logging.INFO)
     asyncio.run(main())
