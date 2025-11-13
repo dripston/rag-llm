@@ -1,8 +1,8 @@
 flask==2.3.3
 flask-cors==4.0.0
 python-dotenv==1.0.0
-pinecone-client==3.1.0
+pinecone==7.3.0
 requests==2.31.0
-langchain==0.0.354
-asyncpg==0.28.0
-numpy==1.24.3
+langchain==0.2.16
+asyncpg==0.29.0
+numpy==1.26.4
