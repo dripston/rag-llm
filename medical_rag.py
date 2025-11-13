@@ -1,7 +1,7 @@
 import os
 import json
 from dotenv import load_dotenv
-import pinecone
+from pinecone import Pinecone
 import requests
 import time
 from typing import Any, Dict, List, Optional
@@ -24,7 +24,7 @@ class MedicalRAG:
             raise ValueError("LLM_API_KEY not found in environment variables")
         
         # Initialize Pinecone
-        self.pc = pinecone.init(api_key=PINECONE_API_KEY)
+        self.pc = Pinecone(api_key=PINECONE_API_KEY)
         self.index = self.pc.Index("medical-records")
         
         # LLM configuration
