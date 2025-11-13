@@ -34,6 +34,7 @@ async def send_to_rag_system(data):
             "Content-Type": "application/json"
         }
         
+        # Format the data to match what the RAG system expects
         payload = {
             "timestamp": datetime.now().isoformat(),
             "source": "postgres_trigger",
@@ -41,10 +42,12 @@ async def send_to_rag_system(data):
         }
         
         logger.info(f"Sending data to RAG system: {UPDATE_RAG_ENDPOINT}")
+        logger.info(f"Payload: {payload}")
         response = requests.post(UPDATE_RAG_ENDPOINT, json=payload, headers=headers, timeout=30)
         
         if response.status_code == 200:
             logger.info("Successfully sent data to RAG system")
+            logger.info(f"Response: {response.text}")
             return True
         else:
             logger.error(f"Failed to send data to RAG system. Status code: {response.status_code}")
@@ -98,14 +101,21 @@ def handle_notification(connection, pid, channel, payload):
             
             # Send to RAG system using the global event loop
             if event_loop:
+                logger.info("Scheduling send_to_rag_system to run in event loop")
                 asyncio.run_coroutine_threadsafe(send_to_rag_system(data), event_loop)
+                logger.info("Scheduled send_to_rag_system successfully")
+            else:
+                logger.warning("No event loop available to schedule send_to_rag_system")
         else:
             logger.warning("Received empty notification payload")
             
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
         logger.error(f"Failed to parse notification payload as JSON: {payload}")
+        logger.error(f"JSON decode error: {e}")
     except Exception as e:
         logger.error(f"Error handling notification: {e}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
 
 async def main():
     """Main function"""

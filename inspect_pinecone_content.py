@@ -62,10 +62,10 @@ def inspect_pinecone_content():
         print(f"\nHospitals found in Pinecone: {sorted(hospitals_found)}")
         
         # Check if HOSP004 is in the hospitals we added
-        if 'ID: HOSP004' in hospitals_found:
-            print("✓ HOSP004 found in Pinecone!")
+        if 'ID: HOSP006' in hospitals_found:
+            print("✓ HOSP006 found in Pinecone!")
         else:
-            print("✗ HOSP004 NOT found in Pinecone")
+            print("✗ HOSP006 NOT found in Pinecone")
             
         return True
         

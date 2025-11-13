@@ -34,7 +34,7 @@ async def add_new_mock_data():
         await conn.execute('''
             INSERT INTO "Hospital" (hospital_id, hospital_name, address, phone_number, created_at)
             VALUES ($1, $2, $3, $4, $5)
-        ''', 'HOSP004', 'Metropolitan Medical Center', '789 Healthcare Drive, MetroCity', '+1-555-0199', datetime.now())
+        ''', 'HOSP009', 'Metropolitan Medical Center', '789 Healthcare Drive, MetroCity', '+1-555-0199', datetime.now())
         
         # Add new doctor
         print("Adding new doctor...")
