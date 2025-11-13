@@ -133,9 +133,10 @@ class MedicalRAG:
                     chat_history += f"Human: {turn['query']}\nAssistant: {turn['response']}\n\n"
             
             # Create prompt with RAG context
+            chat_history_text = f"Conversation History:\n{chat_history}" if chat_history else ""
             prompt = f"""You are a medical assistant AI. Use the following medical records and conversation history to answer the user's question.
 
-{f"Conversation History:\n{chat_history}" if chat_history else ""}
+{chat_history_text}
 
 Relevant Medical Records:
 {context}
