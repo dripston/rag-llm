@@ -17,6 +17,11 @@ CORS(app, origins=["http://localhost:3000", "http://localhost:3500"])
 # Initialize the Medical RAG system
 rag = MedicalRAG()
 
+@app.route('/', methods=['GET'])
+def home():
+    """Root endpoint"""
+    return jsonify({"message": "Medical RAG API is running", "endpoints": ["/health", "/ask", "/update_rag"]}), 200
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
