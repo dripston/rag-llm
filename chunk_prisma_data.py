@@ -78,6 +78,11 @@ def convert_to_documents(data):
     """Convert fetched data to LangChain Documents"""
     documents = []
     
+    # Handle case where data might be empty or malformed
+    if not data or not isinstance(data, dict):
+        print("Warning: No valid data provided for document conversion")
+        return documents
+    
     # Convert Hospitals to documents
     for hospital in data.get('hospitals', []):
         content = f"""
@@ -214,6 +219,7 @@ def convert_to_documents(data):
         doc = Document(page_content=content.strip(), metadata=metadata)
         documents.append(doc)
     
+    print(f"Converted {len(documents)} documents from provided data")
     return documents
 
 def chunk_documents(documents):

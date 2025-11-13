@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from medical_rag import MedicalRAG
+from background_processor import start_background_processor, queue_file_for_processing
 
 # Load environment variables
 load_dotenv()
@@ -16,6 +17,9 @@ CORS(app, origins=["http://localhost:3000", "http://localhost:3500"])
 
 # Initialize the Medical RAG system
 rag = MedicalRAG()
+
+# Start background processor
+start_background_processor()
 
 @app.route('/', methods=['GET'])
 def home():
@@ -48,33 +52,44 @@ def ask_question():
 def update_rag_data():
     """Endpoint to update RAG with new data"""
     try:
-        # In a real implementation, this would:
-        # 1. Receive new data from the client
-        # 2. Process the data through chunking
-        # 3. Generate embeddings
-        # 4. Store in Pinecone
-        
         data = request.get_json()
         
         if not data:
             return jsonify({"error": "No data provided"}), 400
         
-        # For now, we'll just acknowledge the request
-        # In a full implementation, this would process the new data
+        # Log the received data
         print(f"Received data for RAG update: {data}")
         
-        # TODO: Implement actual RAG update logic here
-        # This would involve:
-        # 1. Chunking the new data
-        # 2. Generating embeddings
-        # 3. Storing in Pinecone
+        # Extract the actual data from the payload
+        payload_data = data.get('data', data)
+        
+        # Save received data to a temporary file for processing
+        import json
+        import os
+        from datetime import datetime
+        
+        # Create a timestamp for this update
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        temp_file = f"temp_update_{timestamp}.json"
+        
+        # Save the received data
+        with open(temp_file, "w") as f:
+            json.dump(payload_data, f, indent=2, default=str)
+        
+        print(f"Data saved to {temp_file}")
+        
+        # Queue the file for background processing
+        queue_file_for_processing(temp_file)
+        print("Queued RAG update for background processing")
         
         return jsonify({
-            "message": "Data received for RAG update", 
-            "received_items": len(data) if isinstance(data, list) else 1
+            "message": "Data received and queued for RAG update", 
+            "received_items": len(payload_data) if isinstance(payload_data, list) else 1,
+            "timestamp": timestamp
         }), 200
         
     except Exception as e:
+        print(f"Error in update_rag_data: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':

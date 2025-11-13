@@ -23,7 +23,7 @@ class MedicalRAG:
         if not LLM_API_KEY:
             raise ValueError("LLM_API_KEY not found in environment variables")
         
-        # Initialize Pinecone
+        # Initialize Pinecone - Updated for Pinecone SDK v7+
         self.pc = Pinecone(api_key=PINECONE_API_KEY)
         self.index = self.pc.Index("medical-records")
         
