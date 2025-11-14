@@ -18,11 +18,11 @@ SAMBANOVA_BASE_URL = os.getenv("SAMBANOVA_BASE_URL", "https://api.sambanova.ai/v
 
 # Fallback API keys (if available)
 FALLBACK_API_KEYS = [
-    os.getenv("LLM_API_KEY_FALLBACK_1"),
-    os.getenv("LLM_API_KEY_FALLBACK_2"),
-    os.getenv("LLM_API_KEY_FALLBACK_3"),
-    os.getenv("LLM_API_KEY_FALLBACK_4"),
-    os.getenv("LLM_API_KEY_FALLBACK_5")
+    os.getenv("FALLBACK_API_KEY_1"),
+    os.getenv("FALLBACK_API_KEY_2"),
+    os.getenv("FALLBACK_API_KEY_3"),
+    os.getenv("FALLBACK_API_KEY_4"),
+    os.getenv("FALLBACK_API_KEY_5")
 ]
 
 def get_sambanova_embedding(text, api_key=None):
@@ -59,16 +59,25 @@ def get_sambanova_embedding(text, api_key=None):
             return data['data'][0]['embedding']
         elif response.status_code == 429:
             # Rate limit hit
-            key_display = current_api_key[:8] if current_api_key else "Unknown"
+            key_display = "Unknown"
+            if current_api_key:
+                key_str = str(current_api_key)
+                key_display = key_str[:8] if len(key_str) > 8 else key_str
             logger.warning(f"Rate limit hit with API key: {key_display}...")
             return None
         else:
-            key_display = current_api_key[:8] if current_api_key else "Unknown"
+            key_display = "Unknown"
+            if current_api_key:
+                key_str = str(current_api_key)
+                key_display = key_str[:8] if len(key_str) > 8 else key_str
             logger.error(f"Error with API key {key_display}...: {response.status_code} - {response.text}")
             return None
             
     except Exception as error:
-        key_display = current_api_key[:8] if current_api_key else "Unknown"
+        key_display = "Unknown"
+        if current_api_key:
+            key_str = str(current_api_key)
+            key_display = key_str[:8] if len(key_str) > 8 else key_str
         logger.error(f"Error generating embedding with API key {key_display}...: {error}")
         return None
 
@@ -80,6 +89,10 @@ def get_embedding_with_fallback(text):
     if embedding is not None:
         logger.debug("Successfully generated embedding with primary API key")
         return embedding
+    
+    # Log available fallback keys for debugging
+    available_keys = [key for key in FALLBACK_API_KEYS if key]
+    logger.info(f"Primary key failed, trying {len(available_keys)} fallback keys...")
     
     # Try fallback API keys
     for i, fallback_key in enumerate(FALLBACK_API_KEYS):
