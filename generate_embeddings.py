@@ -130,24 +130,27 @@ def generate_embeddings_for_chunks():
         
         # Load existing embeddings
         existing_embeddings = load_existing_embeddings()
-        processed_count = len(existing_embeddings)
         
         logger.info(f"Found {len(chunks)} chunks to process")
-        logger.info(f"Already processed: {processed_count} chunks")
+        logger.info(f"Already processed: {len(existing_embeddings)} chunks")
         
-        # If all chunks are already processed, we're done
-        if processed_count >= len(chunks):
-            logger.info("All chunks already processed!")
+        # Create a set of already processed chunk contents for quick lookup
+        processed_contents = {embedding.get('content', '') for embedding in existing_embeddings}
+        
+        # Filter out already processed chunks
+        new_chunks = [chunk for chunk in chunks if chunk['content'] not in processed_contents]
+        
+        logger.info(f"New chunks to process: {len(new_chunks)}")
+        
+        # If no new chunks, we're done
+        if not new_chunks:
+            logger.info("No new chunks to process!")
             return existing_embeddings
         
-        # Start from where we left off
-        start_index = processed_count
-        logger.info(f"Starting from chunk {start_index + 1}")
-        
-        # Process remaining chunks
-        for i in range(start_index, len(chunks)):
-            chunk = chunks[i]
-            logger.info(f"Generating embedding for chunk {i+1}/{len(chunks)}...")
+        # Process new chunks
+        logger.info(f"Processing {len(new_chunks)} new chunks...")
+        for i, chunk in enumerate(new_chunks):
+            logger.info(f"Generating embedding for new chunk {i+1}/{len(new_chunks)}...")
             
             # Add small delay to avoid rate limits
             time.sleep(0.5)

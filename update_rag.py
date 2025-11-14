@@ -61,17 +61,34 @@ async def process_rag_update(data):
             
         logger.info(f"Generated {len(documents)} documents")
         
-        # Save documents to chunked_prisma_data.json for processing
-        chunked_data = []
+        # Load existing chunked data if it exists
+        existing_chunked_data = []
+        if os.path.exists("chunked_prisma_data.json"):
+            try:
+                with open("chunked_prisma_data.json", "r", encoding="utf-8") as f:
+                    existing_chunked_data = json.load(f)
+                logger.info(f"Loaded {len(existing_chunked_data)} existing chunks")
+            except Exception as e:
+                logger.warning(f"Could not load existing chunked data: {e}")
+                existing_chunked_data = []
+        
+        # Convert new documents to chunked format
+        new_chunked_data = []
         for i, doc in enumerate(documents):
             chunked_item = {
                 "content": doc.page_content,
                 "metadata": doc.metadata
             }
-            chunked_data.append(chunked_item)
+            new_chunked_data.append(chunked_item)
         
+        # Combine existing and new data
+        combined_chunked_data = existing_chunked_data + new_chunked_data
+        
+        # Save combined documents to chunked_prisma_data.json for processing
         with open("chunked_prisma_data.json", "w", encoding="utf-8") as f:
-            json.dump(chunked_data, f, indent=2, default=str)
+            json.dump(combined_chunked_data, f, indent=2, default=str)
+        
+        logger.info(f"Total chunks to process: {len(combined_chunked_data)} ({len(existing_chunked_data)} existing, {len(new_chunked_data)} new)")
         
         logger.info("Generating embeddings...")
         embeddings_data = generate_embeddings_for_chunks()
