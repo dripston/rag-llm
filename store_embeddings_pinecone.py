@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
 import time
+import hashlib
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -86,8 +87,9 @@ def store_embeddings_in_pinecone():
         # Prepare vectors for upsert
         vectors = []
         for i, item in enumerate(embedded_data):
-            # Create a unique ID for each vector
-            vector_id = f"chunk_{i}"
+            # Create a unique ID for each vector based on content hash
+            content_hash = hashlib.md5(item["content"].encode('utf-8')).hexdigest()
+            vector_id = f"chunk_{content_hash}"
             
             # Extract content and metadata
             content = item["content"]
