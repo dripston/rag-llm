@@ -25,5 +25,15 @@
       "hospital_id": "HOSP004",
       "created_at": "2025-11-13 19:13:04.588000"
     }
+  },
+  {
+    "content": "Patient Information:\n        ID: USR099\n        Name: Rahul Verma\n        Mobile: 9123456780\n        Address: 12 Lotus Residency, Mumbai\n        Treated By: DR009\n        Hospital ID: HOSP004\n        Transcript: Patient has mild throat pain and cough\n        Audio URL: https://example.com/audio/99\n        Created: 2025-11-14T12:00:00Z",
+    "metadata": {
+      "source": "user",
+      "user_id": "USR099",
+      "treated_by": "DR009",
+      "hospital_id": "HOSP004",
+      "created_at": "2025-11-14T12:00:00Z"
+    }
   }
 ]

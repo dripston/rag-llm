@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "user_id": "USR099",
+      "user_name": "Rahul Verma",
+      "user_mobile": "9123456780",
+      "address": "12 Lotus Residency, Mumbai",
+      "treated_by": "DR009",
+      "hospital_id": "HOSP004",
+      "transcripted_data": "Patient has mild throat pain and cough",
+      "audio_url": "https://example.com/audio/99",
+      "created_at": "2025-11-14T12:00:00Z"
+    }
+  ]
+}
